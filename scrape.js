@@ -1,6 +1,7 @@
 var path = require("path");
 var Promise = require("bluebird");
 var objectAssign = require("object-assign"),
+	sanitizeResult = require("./sanitize").sanitizeResult,
 	jsdom = require( 'jsdom' ),
 	fs = require( 'fs' ),
 	needle = require( 'needle' )
@@ -39,10 +40,12 @@ module.exports = function scrape(url, options) {
 				}
 
 				var article = new window.Readability( readerArgs, window.document ).parse()
-
+				
+				var sanitizedArticle = sanitizeResult( article )
+				
 				window.close()
 
-				fulfill( article )
+				fulfill( sanitizedArticle )
 			}
 		})
 	})
