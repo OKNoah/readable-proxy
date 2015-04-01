@@ -21,8 +21,6 @@ module.exports = function scrape(url, options) {
 	}, function ( error, response ) {
 		if ( error ) return reject( error )
 		
-		console.error( response )
-		
 		jsdom.env({
 			html: response.body,
 			src: [ readabilityScript ],
